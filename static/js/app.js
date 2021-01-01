@@ -52,11 +52,13 @@ function chart(sampleid){
         var samplevals = samplefirst.sample_values.slice(0,10).reverse();
         var samplabels = samplefirst.otu_lables;
         // var labels = samplabels.slice(0,10).reverse();
+        var toplabels = samplefirst.otu_labels.slice(0, 10).reverse();
         console.log(samplefirst.otu_labels)
         var trace = [{
             x: samplevals,
             y: ids,
-            // text: labels,
+            name: "Belly Button Bar Chart",
+            text: toplabels,
             type: "bar",
             orientation: "h"
         }]
