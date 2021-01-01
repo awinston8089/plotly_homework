@@ -44,17 +44,50 @@ function chart(sampleid){
         var subsamples = data.samples;
 
         //filter data to get the first object
-        var sampleArray = subsamples.filter(sampleObject => sampleObject.id == sampleid);
-        var sampleResult = sampleArray[0];
-        console.log(sampleResult);
-        console.log(sampleArray);
-        var ids = sampleResult.otu_ids
-        var samplevals = sampleResult.sample_values
-        var samplabels = sampleResult.otu_lables
-        
+        var samplefiltered = subsamples.filter(sampleObject => sampleObject.id == sampleid);
+        var samplefirst = samplefiltered[0];
+        console.log(samplefiltered);
+        console.log(samplefirst);
+        var ids = samplefirst.otu_ids.map(ids => `otuid ${ids}`).slice(0,10).reverse();
+        var samplevals = samplefirst.sample_values.slice(0,10).reverse();
+        var samplabels = samplefirst.otu_lables;
+        // var labels = samplabels.slice(0,10).reverse();
+        console.log(samplefirst.otu_labels)
+        var trace = [{
+            x: samplevals,
+            y: ids,
+            // text: labels,
+            type: "bar",
+            orientation: "h"
+        }]
+        // render the bar plot in the bar div tag
+        Plotly.newPlot("bar",trace)
+
+        // creating trace for bubble chart
+        var bubbletrace = [{
+            x: samplefirst.otu_ids,
+            y: samplefirst.sample_values,
+            text: samplabels,
+            mode: "markers",
+            marker: {
+                color: samplefirst.otu_ids, size: samplefirst.sample_values
+            }
+        }]
+        var bubblelayout = {
+            title: "Belly Button Bubble Chart",
+            xaxis: {title:  "Sample Values"},
+            yaxis: {title:  "OTU IDS"},
+            width: 1200, height: 700
+
+        }
+        // render the bar plot in the bar div tag
+        Plotly.newPlot("bubble",bubbletrace,bubblelayout)
 })}
 
-    //Function build bar chart
+    
+
+
+
 
 
     //Function to build bubble chart
